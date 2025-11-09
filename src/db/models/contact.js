@@ -18,21 +18,12 @@ const contactsSchema = new Schema(
       type: Boolean,
       required: true,
       default: false,
-      enum: [true, false],
     },
     contactType: {
       type: String,
       required: true,
       enum: ['personal', 'home', 'work', 'other'],
       default: 'personal',
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
     },
   },
   {
