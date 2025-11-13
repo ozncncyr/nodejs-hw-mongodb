@@ -12,7 +12,7 @@ export const getContactsController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'Successfully found contacts!',
+    message: 'Contacts found successfully!',
     data: contacts,
   });
 };
@@ -22,12 +22,12 @@ export const getContactByIdController = async (req, res) => {
   const contact = await getContactById(contactId);
 
   if (!contact) {
-    throw createHttpError(404, `Contact with id "${contactId}" not found.`);
+    throw createHttpError(404, `Contact not found.`);
   }
 
   res.json({
     status: 200,
-    message: `Successfully found contact with id ${contactId}!`,
+    message: `Contact found successfully!`,
     data: contact,
   });
 };
@@ -51,12 +51,12 @@ export const deleteContactController = async (req, res) => {
   const contact = await deleteContact(contactId);
 
   if (!contact) {
-    throw createHttpError(404, `Contact with id "${contactId}" not found.`);
+    throw createHttpError(404, `Contact not found.`);
   }
 
   res.status(204).json({
     status: 204,
-    message: `Contact with id "${contactId}" deleted successfully.`,
+    message: `Contact deleted successfully.`,
     data: null,
   });
 };
@@ -66,17 +66,14 @@ export const upsertContactController = async (req, res) => {
   const result = await updateContact(contactId, req.body);
 
   if (!result) {
-    throw createHttpError(
-      400,
-      `Failed to upsert contact with id "${contactId}".`
-    );
+    throw createHttpError(400, `Failed to upsert contact.`);
   }
 
   const status = result.isNew ? 201 : 200;
 
   res.status(status).json({
     status,
-    message: `Contact with id "${contactId}" upserted successfully.`,
+    message: `Contact upserted successfully.`,
     data: result.contact,
   });
 };
@@ -92,7 +89,7 @@ export const patchContactController = async (req, res, next) => {
 
   res.json({
     status: 200,
-    message: `Successfully patched a contact!`,
+    message: `Contact patched successfully!`,
     data: result.contact,
   });
 };
