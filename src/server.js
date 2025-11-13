@@ -24,9 +24,10 @@ export const setupServer = () => {
   );
 
   app.get('/', (req, res) => {
-    res.send(
-      'Welcome to the Contacts Management API!\nNavigate to /contacts to get started.\nUse "/contacts/:contactId" to fetch, upsert, update or delete a specific contact by ID.'
-    );
+    res.send({
+      message:
+        'Welcome to the Contacts Management API! Navigate to /contacts to get started. Use /contacts/:contactId to fetch, upsert, update or delete a specific contact by ID.',
+    });
   });
 
   app.use(router);
