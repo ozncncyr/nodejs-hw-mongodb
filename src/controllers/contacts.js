@@ -17,12 +17,13 @@ export const getContactsController = async (req, res) => {
   });
 };
 
-export const getContactByIdController = async (req, res) => {
+export const getContactByIdController = async (req, res, next) => {
   const { contactId } = req.params;
   const contact = await getContactById(contactId);
 
   if (!contact) {
-    throw createHttpError(404, `Contact not found.`);
+    next(createHttpError(404, `Contact not found.`));
+    return;
   }
 
   res.json({
@@ -32,11 +33,12 @@ export const getContactByIdController = async (req, res) => {
   });
 };
 
-export const createContactController = async (req, res) => {
+export const createContactController = async (req, res, next) => {
   const contact = await createContact(req.body);
 
   if (!contact) {
-    throw createHttpError(400, 'Failed to create contact.');
+    next(createHttpError(400, 'Failed to create contact.'));
+    return;
   }
 
   res.status(201).json({
@@ -46,27 +48,29 @@ export const createContactController = async (req, res) => {
   });
 };
 
-export const deleteContactController = async (req, res) => {
+export const deleteContactController = async (req, res, next) => {
   const { contactId } = req.params;
+
   const contact = await deleteContact(contactId);
 
   if (!contact) {
-    throw createHttpError(404, `Contact not found.`);
+    next(createHttpError(404, `Contact not found.`));
+    return;
   }
 
-  res.status(204).json({
-    status: 204,
-    message: `Contact deleted successfully.`,
-    data: null,
-  });
+  res.status(204).send();
 };
 
-export const upsertContactController = async (req, res) => {
+export const upsertContactController = async (req, res, next) => {
   const { contactId } = req.params;
-  const result = await updateContact(contactId, req.body);
+
+  const result = await updateContact(contactId, req.body, {
+    upsert: true,
+  });
 
   if (!result) {
-    throw createHttpError(400, `Failed to upsert contact.`);
+    next(createHttpError(400, `Contact not found.`));
+    return;
   }
 
   const status = result.isNew ? 201 : 200;
