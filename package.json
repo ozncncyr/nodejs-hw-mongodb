@@ -8,8 +8,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "dev": "nodemon src/constants/index.js",
+    "start": "node src/constants/index.js"
   },
   "keywords": [],
   "author": "",
