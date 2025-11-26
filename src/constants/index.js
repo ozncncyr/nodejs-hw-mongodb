@@ -6,6 +6,11 @@ export const SORT_ORDER = {
   DESC: 'desc',
 };
 
+export const TIMER = {
+  FIFTEEN_MINUTES: 15 * 60 * 1000,
+  ONE_DAY: 24 * 60 * 60 * 1000,
+};
+
 const bootstrap = async () => {
   await initMongoConnection();
   setupServer();
