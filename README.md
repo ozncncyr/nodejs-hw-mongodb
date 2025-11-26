@@ -183,7 +183,7 @@ Response:
 ---
 
 ## Validations
-- Joi validation for all create and update requests
+- Joi validation for all create  and update requests
 - Phone number must contain only numbers and may start with +
 - Email must be a valid email address
 - Contact type must be one of: personal, home, work, other
