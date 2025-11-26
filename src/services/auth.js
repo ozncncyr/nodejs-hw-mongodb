@@ -1,6 +1,11 @@
 import bcrypt from 'bcrypt';
+import { randomBytes } from 'crypto';
+import createHttpError from 'http-errors';
+
+import { TIMER } from '../constants/index.js';
 
 import { UsersCollection } from '../db/models/user.js';
+import { SessionsCollection } from '../db/models/session.js';
 
 export const registerUser = async payload => {
   const user = await UsersCollection.findOne({ email: payload.email });
@@ -24,4 +29,17 @@ export const loginUser = async payload => {
   if (!isEqual) {
     throw createHttpError(401, 'Unauthorized');
   }
+
+  await SessionsCollection.deleteOne({ userId: user._id });
+
+  const accessToken = randomBytes(30).toString('base64');
+  const refreshToken = randomBytes(30).toString('base64');
+
+  return await SessionsCollection.create({
+    userId: user._id,
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil: new Date(Date.now() + TIMER.FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + TIMER.ONE_DAY),
+  });
 };
