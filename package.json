@@ -2,7 +2,8 @@
   "name": "nodejs-hw-mongodb",
   "version": "1.0.0",
   "description": "GoIT NodeJS MongoDB Homeworks",
-  "main": "index.js",
+  "type": "module",
+  "main": "/src/constants/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",

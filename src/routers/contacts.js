@@ -9,7 +9,6 @@ import {
 } from '../controllers/contacts.js';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { ROLES } from '../constants/index.js';
 
 import {
   createContactSchema,
