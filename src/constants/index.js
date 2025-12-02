@@ -11,6 +11,11 @@ export const TIMER = {
   ONE_DAY: 24 * 60 * 60 * 1000,
 };
 
+export const ROLES = {
+  ADMIN: 'admin',
+  USER: 'user',
+};
+
 const bootstrap = async () => {
   await initMongoConnection();
   setupServer();
