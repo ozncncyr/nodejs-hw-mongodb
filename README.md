@@ -10,6 +10,7 @@ A simple RESTful API for managing contacts, built with Node.js, Express, and Mon
 > - [hw2-mongodb REST API(live))](https://contacts-app-9tvm.onrender.com/)
 > - [hw3-crud REST API(live))](https://contacts-app-9tvm.onrender.com/)
 > - [hw4-validation REST API(live))](https://contacts-app-9tvm.onrender.com/)
+> - [hw5-auth REST API(live))](https://contacts-app-9tvm.onrender.com/)
 
 
 ---
@@ -20,6 +21,7 @@ A simple RESTful API for managing contacts, built with Node.js, Express, and Mon
 - Store data with MongoDB
 - JSON formatted error responses
 - CORS and HTTP logging support
+- Authentication: register, login, logout, refresh
 
 ---
 
@@ -159,6 +161,82 @@ Response:
 
 ---
 
+## Authentication (hw5-auth)
+
+### Auth Endpoints
+```
+POST /auth/register
+POST /auth/login
+POST /auth/logout
+POST /auth/refresh
+```
+
+#### Register
+Request:
+```json
+{
+  "name": "Jane",
+  "email": "jane@example.com",
+  "password": "yourpassword"
+}
+```
+Response:
+```json
+{
+  "status": 201,
+  "message": "User registered successfully!",
+  "data": { /* user info */ }
+}
+```
+
+#### Login
+Request:
+```json
+{
+  "email": "jane@example.com",
+  "password": "yourpassword"
+}
+```
+Response:
+```json
+{
+  "status": 200,
+  "message": "User logged in successfully!",
+  "data": {
+    "accessToken": "..."
+  }
+}
+```
+- Sets cookies: `sessionId`, `refreshToken`
+
+#### Logout
+```
+POST /auth/logout
+```
+- Clears cookies, returns 204 No Content
+
+#### Refresh Session
+```
+POST /auth/refresh
+```
+- Returns new access token and refreshes cookies
+
+---
+
+## Auth Validations
+- Joi validation for registration and login (see `src/validation/auth.js`)
+- Registration: name (min 3, max 30), valid email, password required
+- Login: valid email, password required
+
+---
+
+## Auth Error Handling
+- Duplicate email: 409 Conflict
+- Invalid credentials: 401 Unauthorized or 404 Not Found
+- All errors returned in JSON format
+
+---
+
 ## Environment Variables
 - You can define `PORT` and MongoDB connection details in the `.env` file.
 
@@ -172,6 +250,7 @@ Response:
   - `routers/` for route definitions
   - `middlewares/` for error handling and validation
   - `utils/` for helper functions (pagination, filters, etc.)
+  - `validation/` for Joi schemas
 
 ---
 
