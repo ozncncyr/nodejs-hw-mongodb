@@ -12,7 +12,7 @@ import { sendEmail } from '../utils/sendMail.js';
 import { UsersCollection } from '../db/models/user.js';
 import { SessionsCollection } from '../db/models/session.js';
 
-import { TIMER, SMTP } from '../constants/index.js';
+import { TIMER, SMTP, TEMPLATES_DIR } from '../constants/index.js';
 
 export const registerUser = async payload => {
   const user = await UsersCollection.findOne({ email: payload.email });
