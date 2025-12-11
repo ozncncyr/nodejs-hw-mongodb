@@ -14,249 +14,28 @@ tags:
     description: Authentication and user management
 servers:
   - url: http://localhost:3000
-  - url: https://contacts-app-9tvm.onrender.com/
+  - url: https://contacts-app-9tvm.onrender.com
 paths:
   /auth/register:
-    post:
-      tags: [auth]
-      summary: Register a new user
-      operationId: registerUser
-      description: Create a new user account.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
-              required: [name, email, password]
-      responses:
-        '200':
-          description: User registered successfully
-        '404':
-          description: Registration failed
+    $ref: '../swagger/paths/auth/register.yaml'
 
   /auth/login:
-    post:
-      tags: [auth]
-      summary: Login a user
-      operationId: loginUser
-      description: Authenticate user and return access token.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                password:
-                  type: string
-              required: [email, password]
-      responses:
-        '200':
-          description: User logged in successfully
-        '404':
-          description: Login failed
+    $ref: '../swagger/paths/auth/login.yaml'
 
   /contacts:
     get:
-      tags: [contacts]
-      summary: Get all contacts
-      operationId: getContacts
-      description: Retrieve a list of all contacts with optional filters and pagination.
-      security:
-        - bearerAuth: []
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-          description: Page number
-        - in: query
-          name: perPage
-          schema:
-            type: integer
-          description: Items per page
-        - in: query
-          name: contactType
-          schema:
-            type: string
-          description: Filter by contact type
-        - in: query
-          name: isFavourite
-          schema:
-            type: boolean
-          description: Filter by favourite
-        - in: query
-          name: sortBy
-          schema:
-            type: string
-          description: Sort field
-        - in: query
-          name: sortOrder
-          schema:
-            type: string
-            enum: [asc, desc]
-          description: Sort order
-      responses:
-        '200':
-          description: A list of contacts
-        '404':
-          description: No contacts found
+      $ref: '../swagger/paths/contacts/get.yaml'
     post:
-      tags: [contacts]
-      summary: Create a new contact
-      operationId: createContact
-      description: Add a new contact to the database.
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                phone:
-                  type: string
-                contactType:
-                  type: string
-                  enum: [personal, home, work, other]
-                isFavourite:
-                  type: boolean
-              required: [name, phone]
-      responses:
-        '200':
-          description: Contact created successfully
-        '404':
-          description: Contact creation failed
-
-  /contacts/{contactId}:
+      $ref: '../swagger/paths/contacts/post.yaml'
+  /contacts/{id}:
     get:
-      tags: [contacts]
-      summary: Get contact by ID
-      operationId: getContactById
-      description: Retrieve a contact by its unique ID.
-      security:
-        - bearerAuth: []
-      parameters:
-        - in: path
-          name: contactId
-          required: true
-          schema:
-            type: string
-          description: Contact ID
-      responses:
-        '200':
-          description: Contact found
-        '404':
-          description: Contact not found
+      $ref: '../swagger/paths/contacts/{id}/get.yaml'
     put:
-      tags: [contacts]
-      summary: Replace contact by ID
-      operationId: replaceContact
-      description: Replace an existing contact with new data.
-      security:
-        - bearerAuth: []
-      parameters:
-        - in: path
-          name: contactId
-          required: true
-          schema:
-            type: string
-          description: Contact ID
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                phone:
-                  type: string
-                contactType:
-                  type: string
-                  enum: [personal, home, work, other]
-                isFavourite:
-                  type: boolean
-              required: [name, phone]
-      responses:
-        '200':
-          description: Contact updated successfully
-        '404':
-          description: Contact not found
+      $ref: '../swagger/paths/contacts/{id}/put.yaml'
     patch:
-      tags: [contacts]
-      summary: Update contact by ID (partial)
-      operationId: updateContact
-      description: Update specific fields of a contact by its ID.
-      security:
-        - bearerAuth: []
-      parameters:
-        - in: path
-          name: contactId
-          required: true
-          schema:
-            type: string
-          description: Contact ID
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                phone:
-                  type: string
-                contactType:
-                  type: string
-                  enum: [personal, home, work, other]
-                isFavourite:
-                  type: boolean
-      responses:
-        '200':
-          description: Contact updated successfully
-        '404':
-          description: Contact not found
+      $ref: '../swagger/paths/contacts/{id}/patch.yaml'
     delete:
-      tags: [contacts]
-      summary: Delete contact by ID
-      operationId: deleteContact
-      description: Remove a contact from the database by its ID.
-      security:
-        - bearerAuth: []
-      parameters:
-        - in: path
-          name: contactId
-          required: true
-          schema:
-            type: string
-          description: Contact ID
-      responses:
-        '200':
-          description: Contact deleted successfully
-        '404':
-          description: Contact not found
+      $ref: '../swagger/paths/contacts/{id}/delete.yaml'
 
 components:
   securitySchemes:

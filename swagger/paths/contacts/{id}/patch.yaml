@@ -1,26 +1,33 @@
 
   tags:
     - contacts
-  summary: Create a new contact
-  operationId: createContact
-  description: Add a new contact to the database.
+  summary: Update contact by ID (partial)
+  operationId: updateContact
+  description: Update specific fields of a contact by its ID.
   security:
     - bearerAuth: []
+  parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: string
+      description: Contact ID
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas/contact.yaml'
+          $ref: '../../../components/schemas/contact.yaml'
   responses:
     '200':
-      description: Contact created successfully
+      description: Contact updated successfully
       content:
         application/json:
           schema:
-            $ref: ../../components/schemas/contact.yaml
+            $ref: '../../../components/schemas/contact.yaml'
     '404':
-      description: Contact creation failed
+      description: Contact not found
       content:
         application/json:
           schema:
@@ -31,6 +38,6 @@
                 example: 404
               message:
                 type: string
-                example: Contact creation failed
+                example: Contact not found
               data:
                 type: "null"

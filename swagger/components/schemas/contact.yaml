@@ -1,0 +1,24 @@
+type: object
+properties:
+  id:
+    type: string
+    example: 656c2e2f8b3c2a1a2b3c4d5e
+  name:
+    type: string
+    example: John Doe
+  email:
+    type: string
+    example: john.doe@example.com
+  phone:
+    type: string
+    example: "+1234567890"
+  contactType:
+    type: string
+    enum: [personal, home, work, other]
+    example: personal
+  isFavourite:
+    type: boolean
+    example: false
+required:
+  - name
+  - phone

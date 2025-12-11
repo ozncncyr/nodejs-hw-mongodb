@@ -1,0 +1,64 @@
+
+  tags:
+    - contacts
+  summary: Get all contacts
+  operationId: getContacts
+  description: Retrieve a list of all contacts with optional filters and pagination.
+  security:
+    - bearerAuth: []
+  parameters:
+    - in: query
+      name: page
+      schema:
+        type: integer
+      description: Page number
+    - in: query
+      name: perPage
+      schema:
+        type: integer
+      description: Items per page
+    - in: query
+      name: contactType
+      schema:
+        type: string
+      description: Filter by contact type
+    - in: query
+      name: isFavourite
+      schema:
+        type: boolean
+      description: Filter by favourite
+    - in: query
+      name: sortBy
+      schema:
+        type: string
+      description: Sort field
+    - in: query
+      name: sortOrder
+      schema:
+        type: string
+        enum: [asc, desc]
+      description: Sort order
+  responses:
+    '200':
+      description: A list of contacts
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../components/schemas/contact.yaml'
+    '404':
+      description: No contacts found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 404
+              message:
+                type: string
+                example: No contacts found
+              data:
+                type: "null"
