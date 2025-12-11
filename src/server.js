@@ -33,7 +33,7 @@ export const setupServer = () => {
   app.get('/', (req, res) => {
     res.send({
       message:
-        'Welcome to the Contacts Management API! Navigate to /contacts to get started. Use /contacts/:contactId to fetch, upsert, update or delete a specific contact by ID.',
+        'Welcome to the Contacts Management API by Ozan Can CUYAR! Navigate to /api-docs to get started.',
     });
   });
 
