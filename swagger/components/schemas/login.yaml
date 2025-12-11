@@ -1,18 +1,13 @@
 type: object
 properties:
-  status:
-    type: integer
-    example: 200
-  message:
+  email:
     type: string
-    example: User logged in successfully
-  data:
-    type: object
-    properties:
-      accessToken:
-        type: string
-        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    format: email
+    example: john.doe@example.com
+  password:
+    type: string
+    format: password
+    example: mySecret123
 required:
-  - status
-  - message
-  - data
+  - email
+  - password
